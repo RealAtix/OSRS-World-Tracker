@@ -5,6 +5,7 @@ Info
 -------------------------
 
 At the moment you can only update the table by clicking the update button (will be changed in next release(s))
+
 Sort by clicking on the columns
 
 Download
