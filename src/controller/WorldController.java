@@ -13,6 +13,9 @@ import model.Scraper;
 import model.World;
 import observer.Observable;
 import observer.Observer;
+import state.StateStopped;
+import state.StateTimer;
+import state.StateWorking;
 import view.GUI;
 
 public class WorldController implements Observable{
@@ -21,10 +24,19 @@ public class WorldController implements Observable{
 	private WorldDB worlds;
 	private List<Observer> observers;
 	
+	private StateTimer state;
+	private StateWorking stateWorking;
+	private StateStopped stateStopped;
+	
 	public WorldController() throws NotFound, ResponseException {
 		scraper = new Scraper("http://oldschool.runescape.com/slu.ws?order=WMLPA");;
 		worlds = new WorldDB();
 		observers = new ArrayList<Observer>();
+		
+		stateWorking = new StateWorking();
+		stateStopped = new StateStopped();
+		state = stateStopped;
+		
 		worlds.setWorlds(scraper.init());
 	}
 	
@@ -54,6 +66,50 @@ public class WorldController implements Observable{
 			worlds.getWorlds().get(i).setPopulation(updates.get(i));
 		}
 		notifyObservers();
+	}
+	
+	public void handleTimer(String s) throws Exception {
+		if (s.equals("0") || s == null) {
+			throw new Exception("Invalid character");
+		}
+		
+		int seconds = Integer.parseInt(s);
+		if (seconds < 1) {
+			throw new Exception("Minimum time is 1");
+		}
+		
+		if (state.equals(stateStopped)) {
+			state = stateWorking;
+			notifyObservers();
+			time(seconds);
+		} else {
+			state = stateStopped;
+			notifyObservers();
+		}
+	}
+	
+	public void time(int seconds) throws InterruptedException, NumberFormatException, NotFound, ResponseException {
+		if (state.equals(stateWorking)) {
+			Thread t = new Thread(new Runnable() {
+         	    public void run() {
+         	    	while (state.equals(stateWorking)) {
+	        			try {
+	        				Thread.sleep(seconds * 1000);
+							updateWorlds();
+						} catch (NumberFormatException | NotFound | ResponseException e) {
+							e.printStackTrace();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+         	    	}
+         	    }
+         	 });
+         	 t.start();
+		}
+	}
+	
+	public StateTimer getCurrentState() {
+		return state;
 	}
 	
 	public List<World> getWorlds() {
@@ -87,6 +143,10 @@ public class WorldController implements Observable{
 	public void setObservers(List<Observer> o) {
 		observers = o;
 		
+	}
+
+	public int getWarningValue() {
+		return 5;
 	}
 	
 }

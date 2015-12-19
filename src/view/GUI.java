@@ -23,29 +23,44 @@ import com.jaunt.ResponseException;
 import controller.WorldController;
 import model.World;
 import observer.Observable;
+import observers.ButtonStart;
+import observers.Table;
+import observers.TextFieldTimer;
 import observers.WorldTable;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Font;
+import javax.swing.JTextField;
 
 
 public class GUI extends JFrame{
 	private WorldController controller;
-	private WorldTableModel worldTable;
+	private WorldTableModel tableModel;
+	private Table worldTable;
 	private JPanel contentPane;
 	private JTable table;
 	private JPanel panel;
 	private JButton btnRefresh;
+	private JLabel lblTimer;
+	private JButton btnStart;
+	private JTextField textTimer;
+	private TextFieldTimer worldTextFieldTimer;
+	private ButtonStart worldButtonStart;
 
 
 	/**
 	 * Create the application.
 	 */
 	public GUI(WorldController controller) {
-		setResizable(false);
 		this.controller = controller;
-		worldTable = new WorldTable(new ArrayList<World>(), controller);
+		tableModel = new WorldTable(new ArrayList<World>(), controller);
+		worldTable = new Table(controller, tableModel);
+		worldTextFieldTimer = new TextFieldTimer(controller);
+		worldButtonStart = new ButtonStart(controller);
 		
 		setupUI();
 		createEvents();
@@ -61,6 +76,7 @@ public class GUI extends JFrame{
 		setTitle("World Tracker");
 		setBounds(100, 100, 541, 541);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -68,7 +84,7 @@ public class GUI extends JFrame{
 		setContentPane(contentPane);
 		
 		
-		table = new JTable(worldTable);
+		table = worldTable.getTable();
 		table.setFillsViewportHeight(true);
 		table.setPreferredSize(new Dimension(300, 500));
 		table.setAutoCreateRowSorter(true);
@@ -84,6 +100,7 @@ public class GUI extends JFrame{
 		col = table.getColumnModel().getColumn(1);
 		col.setCellRenderer(dtcr);
 		
+		
 		col = table.getColumnModel().getColumn(2);
 		col.setCellRenderer(dtcr);
 		
@@ -97,20 +114,36 @@ public class GUI extends JFrame{
 		contentPane.add(panel, BorderLayout.SOUTH);
 		
 		btnRefresh = new JButton("Refresh");
+		
+		btnStart = worldButtonStart.getButton();
+
+		textTimer = worldTextFieldTimer.getTextField();
+		
+		lblTimer = new JLabel("Timer:");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
+					.addComponent(lblTimer)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textTimer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnStart)
+					.addPreferredGap(ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
 					.addComponent(btnRefresh)
-					.addContainerGap(331, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(btnRefresh)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnRefresh)
+						.addComponent(lblTimer)
+						.addComponent(textTimer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnStart))
+					.addContainerGap())
 		);
 		panel.setLayout(gl_panel);
 	}
@@ -121,6 +154,17 @@ public class GUI extends JFrame{
 				try {
 					controller.updateWorlds();
 				} catch (NumberFormatException | NotFound | ResponseException e) {
+					JOptionPane.showMessageDialog(new JFrame(), e.getMessage(), "Error",
+					        JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					controller.handleTimer(textTimer.getText());
+				} catch (Exception e) {
 					JOptionPane.showMessageDialog(new JFrame(), e.getMessage(), "Error",
 					        JOptionPane.ERROR_MESSAGE);
 				}

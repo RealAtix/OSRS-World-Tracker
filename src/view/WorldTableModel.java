@@ -1,10 +1,10 @@
 package view;
 
+import java.awt.Component;
 import java.util.List;
 
-import javax.swing.JLabel;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 import controller.WorldController;
 import model.World;
@@ -19,6 +19,7 @@ public class WorldTableModel extends AbstractTableModel {
 	private final String[] columnNames = new String[] {
             "World", "Population", "Difference", "Member"
     };
+	
     private final Class[] columnClass = new Class[] {
         String.class, Integer.class, Integer.class, String.class
     };
