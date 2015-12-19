@@ -4,8 +4,7 @@
 Info
 -------------------------
 
-At the moment you can only update the table by clicking the update button (will be changed in next release(s))
-
+You can set the update timer every x seconds and also manually refresh
 Sort by clicking on the columns
 
 Download
