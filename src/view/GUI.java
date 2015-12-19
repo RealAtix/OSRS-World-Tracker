@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableRowSorter;
 
 import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
@@ -26,13 +27,15 @@ import observers.Table;
 import observers.TextFieldTimer;
 import observers.WorldTable;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 
 public class GUI extends JFrame{
@@ -48,6 +51,7 @@ public class GUI extends JFrame{
 	private JTextField textTimer;
 	private TextFieldTimer worldTextFieldTimer;
 	private ButtonStart worldButtonStart;
+	private JComboBox comboFilter;
 
 
 	/**
@@ -104,7 +108,7 @@ public class GUI extends JFrame{
 		col.setCellRenderer(dtcr);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
@@ -118,6 +122,10 @@ public class GUI extends JFrame{
 		textTimer = worldTextFieldTimer.getTextField();
 		
 		lblTimer = new JLabel("Timer:");
+		
+		comboFilter = new JComboBox();
+		comboFilter.setModel(new DefaultComboBoxModel(new String[] {"All", "P2P", "F2P"}));
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
@@ -128,7 +136,9 @@ public class GUI extends JFrame{
 					.addComponent(textTimer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnStart)
-					.addPreferredGap(ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+					.addComponent(comboFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnRefresh)
 					.addContainerGap())
 		);
@@ -140,7 +150,8 @@ public class GUI extends JFrame{
 						.addComponent(btnRefresh)
 						.addComponent(lblTimer)
 						.addComponent(textTimer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnStart))
+						.addComponent(btnStart)
+						.addComponent(comboFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		panel.setLayout(gl_panel);
@@ -166,6 +177,24 @@ public class GUI extends JFrame{
 					JOptionPane.showMessageDialog(new JFrame(), e.getMessage(), "Error",
 					        JOptionPane.ERROR_MESSAGE);
 				}
+			}
+		});
+		
+		comboFilter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JComboBox cb = (JComboBox) e.getSource();
+				String filter; 
+				if (cb.getSelectedItem().equals("All")) {
+					filter = ".*";
+				} else if (cb.getSelectedItem().equals("P2P")) {
+					filter = "Members";
+				} else {
+					filter = "Free";
+				}
+				
+				RowFilter<String, Integer> rowFilter = RowFilter.regexFilter(filter, 3);
+				((TableRowSorter) table.getRowSorter()).setRowFilter(rowFilter);
 			}
 		});
 	}

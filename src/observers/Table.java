@@ -1,9 +1,6 @@
 package observers;
 
-import java.awt.Component;
-
 import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
 
 import controller.WorldController;
 import observer.Observer;
@@ -20,11 +17,12 @@ public class Table implements Observer{
 		this.model = model;
 		
 		table = new JTable(model);
+		controller.addObserver(this);
 	}
 	
 	@Override
 	public void update() {
-
+		
 	}
 
 	
