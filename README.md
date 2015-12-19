@@ -5,6 +5,7 @@ Info
 -------------------------
 
 You can set the update timer every x seconds and also manually refresh
+
 Sort by clicking on the columns
 
 Download
