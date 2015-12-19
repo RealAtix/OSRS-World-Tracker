@@ -32,6 +32,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 
 public class GUI extends JFrame{
@@ -71,7 +72,7 @@ public class GUI extends JFrame{
 	 */
 	private void setupUI() {
 		setTitle("World Tracker");
-		setBounds(100, 100, 541, 541);
+		setBounds(100, 100, 541, 541); //541
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		
@@ -83,7 +84,7 @@ public class GUI extends JFrame{
 		
 		table = worldTable.getTable();
 		table.setFillsViewportHeight(true);
-		table.setPreferredSize(new Dimension(300, 500));
+		//table.setPreferredSize(new Dimension(300, 541));
 		table.setAutoCreateRowSorter(true);
 		
 		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
@@ -103,7 +104,9 @@ public class GUI extends JFrame{
 		col.setCellRenderer(dtcr);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
-		contentPane.add(scrollPane, BorderLayout.WEST);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
 		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
