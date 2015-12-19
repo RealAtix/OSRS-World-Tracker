@@ -14,7 +14,6 @@ public class Launcher {
 			w.showUI();
 			w.updateWorlds();
 		} catch (NotFound | ResponseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 

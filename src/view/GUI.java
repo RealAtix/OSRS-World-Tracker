@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import com.jaunt.ResponseException;
 
 import controller.WorldController;
 import model.World;
-import observer.Observable;
 import observers.ButtonStart;
 import observers.Table;
 import observers.TextFieldTimer;
@@ -33,7 +31,6 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Font;
 import javax.swing.JTextField;
 
 
@@ -88,8 +85,6 @@ public class GUI extends JFrame{
 		table.setFillsViewportHeight(true);
 		table.setPreferredSize(new Dimension(300, 500));
 		table.setAutoCreateRowSorter(true);
-//		Dimension d = table.getPreferredSize();
-//		table.setPreferredScrollableViewportSize(d);
 		
 		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 		dtcr.setHorizontalAlignment(SwingConstants.LEFT);
