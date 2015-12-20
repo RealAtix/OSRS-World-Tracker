@@ -1,5 +1,5 @@
 # OSRS-World-Tracker
-*Scrapes the worlds and calculates the difference in population*
+*Scrapes the worlds of Old School Runescape and calculates the difference in population*
 
 Info
 -------------------------
