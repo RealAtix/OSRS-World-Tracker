@@ -63,12 +63,22 @@ public class Scraper {
 		ep2p = userAgent.doc.findEvery("<tr class='server-list__row server-list__row--members'>");
 		
 		for (Element e: ef2p) {
-			int population = Integer.parseInt(e.getElement(1).getText().substring(0, e.getElement(1).getText().length() - " players".length()));
+			int population = 0;
+			
+			if (e.getElement(1).getText().length() >= 0) {
+				population = Integer.parseInt(e.getElement(1).getText().substring(0, e.getElement(1).getText().length() - " players".length()));
+			} 
+			
 			worldPop.add(population);
 		}
 		
 		for (Element e: ep2p) {
-			int population = Integer.parseInt(e.getElement(1).getText().substring(0, e.getElement(1).getText().length() - " players".length()));
+			int population = 0;
+			
+			if (e.getElement(1).getText().length() >= 0) {
+				population = Integer.parseInt(e.getElement(1).getText().substring(0, e.getElement(1).getText().length() - " players".length()));
+			} 
+			
 			worldPop.add(population);
 		}
 		
