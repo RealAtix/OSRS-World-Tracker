@@ -15,5 +15,5 @@ Download
 
 Download the latest binary [here](https://github.com/RealAtix/OSRS-World-Tracker/releases)
 
-![image](http://i.imgur.com/w2Q3iuF.png)
+![image](http://i.imgur.com/BAZbjms.png)
 
