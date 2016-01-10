@@ -65,7 +65,7 @@ public class Scraper {
 		for (Element e: ef2p) {
 			int population = 0;
 			
-			if (e.getElement(1).getText().length() >= 0) {
+			if (e.getElement(1).getText().length() > 0) {
 				population = Integer.parseInt(e.getElement(1).getText().substring(0, e.getElement(1).getText().length() - " players".length()));
 			} 
 			
@@ -75,7 +75,7 @@ public class Scraper {
 		for (Element e: ep2p) {
 			int population = 0;
 			
-			if (e.getElement(1).getText().length() >= 0) {
+			if (e.getElement(1).getText().length() > 0) {
 				population = Integer.parseInt(e.getElement(1).getText().substring(0, e.getElement(1).getText().length() - " players".length()));
 			} 
 			
