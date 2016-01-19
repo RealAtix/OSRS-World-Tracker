@@ -31,8 +31,13 @@ public class Scraper {
 				id = "3" + e.getElement(0).getElement(0).getText().substring(11, 13);
 			}
 			
-			int population = Integer.parseInt(e.getElement(1).getText().substring(0, e.getElement(1).getText().length() - " players".length()));
+			int population = 0;
+			if (e.getElement(1).getText().length() > 0) {
+				population = Integer.parseInt(e.getElement(1).getText().substring(0, e.getElement(1).getText().length() - " players".length()));
+			} 
+			
 			String country = e.getElement(2).getText();
+			
 			world = new World(id, false, population, country);
 			worlds.add(world);
 		}
@@ -45,8 +50,13 @@ public class Scraper {
 				id = "3" + e.getElement(0).getElement(0).getText().substring(11, 13);
 			}
 			
-			int population = Integer.parseInt(e.getElement(1).getText().substring(0, e.getElement(1).getText().length() - " players".length()));
+			int population = 0;
+			if (e.getElement(1).getText().length() > 0) {
+				population = Integer.parseInt(e.getElement(1).getText().substring(0, e.getElement(1).getText().length() - " players".length()));
+			} 
+			
 			String country = e.getElement(2).getText();
+			
 			world = new World(id, true, population, country);
 			worlds.add(world);
 		}
