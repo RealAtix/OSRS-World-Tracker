@@ -11,7 +11,7 @@ Sort by clicking on the columns
 Filter by selecting an option in the combobox
 
 
-*I'm using Jaunt API for the scraping which expires every month, you will have to download the latest version of OSRS World Tracker when that happens. I look for an alternative when I have time.*
+*I'm using Jaunt API for the scraping which expires every month, you will have to download the latest version of OSRS World Tracker when that happens. I will look for an alternative when I have time.*
 
 Download
 -------------------------
