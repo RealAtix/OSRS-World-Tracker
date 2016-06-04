@@ -44,11 +44,17 @@ public class Scraper {
 		
 		for (Element e: ep2p) {
 			String id;
+			
+			if (e.getElement(0).getElement(0).getText().equals("World 666")) {
+				continue; // Jagex using "World 666" instead of the usual "Old School xx".. nice consistency
+			}
+			
 			if (e.getElement(0).getElement(0).getText().length() == 12) {
 				id = "30" + e.getElement(0).getElement(0).getText().substring(11, 12);
 			} else {
 				id = "3" + e.getElement(0).getElement(0).getText().substring(11, 13);
 			}
+			
 			
 			int population = 0;
 			if (e.getElement(1).getText().length() > 0) {
@@ -85,6 +91,9 @@ public class Scraper {
 		for (Element e: ep2p) {
 			int population = 0;
 			
+			if (e.getElement(0).getElement(0).getText().equals("World 666")) {
+				continue; //skip entry when World 666
+			}
 			if (e.getElement(1).getText().length() > 0) {
 				population = Integer.parseInt(e.getElement(1).getText().substring(0, e.getElement(1).getText().length() - " players".length()));
 			} 
