@@ -94,8 +94,8 @@ public class WorldController implements Observable{
          	    public void run() {
          	    	while (state.equals(stateWorking)) {
 	        			try {
+	        				updateWorlds();
 	        				Thread.sleep(seconds * 1000);
-							updateWorlds();
 						} catch (NumberFormatException | NotFound | ResponseException e) {
 							e.printStackTrace();
 						} catch (InterruptedException e) {
