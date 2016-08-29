@@ -16,7 +16,7 @@ Filter by selecting an option in the combobox
 Download
 -------------------------
 
-[![Github All Releases](https://img.shields.io/github/downloads/realatix/osrs-world-tracker/total.svg?maxAge=2592000)]()
+[![Github All Releases](https://img.shields.io/github/downloads/realatix/osrs-world-tracker/total.svg?maxAge=2592000)](https://github.com/RealAtix/OSRS-World-Tracker/releases)
 
 Download the latest binary [here](https://github.com/RealAtix/OSRS-World-Tracker/releases)
 
