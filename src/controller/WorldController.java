@@ -1,12 +1,10 @@
 package controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
-import com.jaunt.NotFound;
-import com.jaunt.ResponseException;
 
 import db.WorldDB;
 import model.Scraper;
@@ -28,7 +26,7 @@ public class WorldController implements Observable{
 	private StateWorking stateWorking;
 	private StateStopped stateStopped;
 	
-	public WorldController() throws NotFound, ResponseException {
+	public WorldController() throws IOException {
 		scraper = new Scraper("http://oldschool.runescape.com/slu.ws?order=WMLPA");;
 		worlds = new WorldDB();
 		observers = new ArrayList<Observer>();
@@ -60,7 +58,7 @@ public class WorldController implements Observable{
 
 	}
 	
-	public void updateWorlds() throws NumberFormatException, NotFound, ResponseException {
+	public void updateWorlds() throws NumberFormatException, IOException {
 		List<Integer> updates = scraper.updateWorlds();
 		for (int i = 0; i < worlds.getWorlds().size(); i++) {
 			worlds.getWorlds().get(i).setPopulation(updates.get(i));
@@ -88,7 +86,7 @@ public class WorldController implements Observable{
 		}
 	}
 	
-	public void time(int seconds) throws InterruptedException, NumberFormatException, NotFound, ResponseException {
+	public void time(int seconds) {
 		if (state.equals(stateWorking)) {
 			Thread t = new Thread(new Runnable() {
          	    public void run() {
@@ -96,9 +94,11 @@ public class WorldController implements Observable{
 	        			try {
 	        				updateWorlds();
 	        				Thread.sleep(seconds * 1000);
-						} catch (NumberFormatException | NotFound | ResponseException e) {
+						} catch (NumberFormatException e) {
 							e.printStackTrace();
 						} catch (InterruptedException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
 							e.printStackTrace();
 						}
          	    	}

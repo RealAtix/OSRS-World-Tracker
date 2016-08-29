@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -16,9 +17,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
-
-import com.jaunt.NotFound;
-import com.jaunt.ResponseException;
 
 import controller.WorldController;
 import model.World;
@@ -162,7 +160,7 @@ public class GUI extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					controller.updateWorlds();
-				} catch (NumberFormatException | NotFound | ResponseException e) {
+				} catch (NumberFormatException | IOException e) {
 					JOptionPane.showMessageDialog(new JFrame(), e.getMessage(), "Error",
 					        JOptionPane.ERROR_MESSAGE);
 				}

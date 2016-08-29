@@ -1,10 +1,8 @@
 package view;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
-
-import com.jaunt.NotFound;
-import com.jaunt.ResponseException;
-
 import controller.WorldController;
 
 public class Launcher {
@@ -15,8 +13,10 @@ public class Launcher {
 			w = new WorldController();
 			w.showUI();
 			w.updateWorlds();
-		} catch (NotFound | ResponseException e1) {
-			e1.printStackTrace();
+		} catch (UnknownHostException e) {
+			JOptionPane.showMessageDialog(null, "Can't reach oldschool.runescape.com, check your internet connection", "Host unreachable", JOptionPane.ERROR_MESSAGE);
+		} catch (IOException e) {
+			e.printStackTrace();
 		} catch (NullPointerException e) {
 			JOptionPane.showMessageDialog(null, "Jaunt API has expired, please update OSRS World Tracker to the newest version\n\nhttps://github.com/RealAtix/OSRS-World-Tracker", "Out of date", JOptionPane.ERROR_MESSAGE);
 		}
