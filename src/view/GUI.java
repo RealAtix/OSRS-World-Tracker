@@ -76,7 +76,7 @@ public class GUI extends JFrame{
 		setTitle("World Tracker");
 		setBounds(100, 100, 541, 541); //541
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(false);
+		setResizable(true);
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

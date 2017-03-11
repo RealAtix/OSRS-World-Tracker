@@ -10,7 +10,7 @@ import controller.WorldController;
 
 public class Launcher {
 	
-	private final static String VERSION = "v1.2";
+	private final static String VERSION = "v1.2.1";
 
 	public static void main(String[] args) {
 		WorldController w = null;
