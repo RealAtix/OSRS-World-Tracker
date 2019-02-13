@@ -25,11 +25,8 @@ public class Scraper {
 		
 		for (Element e: elements) {
 			String id;
-			if (e.child(0).text().length() == 12) {
-				id = "30" + e.child(0).text().substring(11, 12);
-			} else {
-				id = "3" + e.child(0).text().substring(11, 13);
-			}
+			String url = e.child(0).child(0).attr("href");
+			id = url.substring(url.length()-3);
 			
 			int population = 0;
 			if (e.child(1).text().length() > 0) {
